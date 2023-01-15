@@ -3,7 +3,6 @@ import "./App.css";
 import { useState } from "react";
 
 function Header(props) {
-<<<<<<< Updated upstream
   console.log("props", props, props.title);
   return (
     <header>
@@ -99,58 +98,6 @@ function App() {
       ></Nav>
       {content}
       <a href="/create">Create</a>
-=======
-  console.log('props',props, props.title)
-  return <header>
-    <h1><a href="/" onClick={(event)=> {
-      event.preventDefault();
-      props.onChangeMode()
-    }}>{props.title}</a></h1>
-  </header>
-}
-
-function Nav(props) {
-  const lst = []
-  for (let i=0; i<props.topics.length; i++) {
-    let t = props.topics[i];
-    lst.push(<li key={t.id}>
-      <a id = {t.id} href={"/read/"+t.id} onClick={(event)=> {
-        event.preventDefault();
-        props.onChangMode(event.target.id)
-        console.log(event.target)
-        console.log(t)
-      }}>{t.title}</a>
-    </li>)
-  }
-  return <nav>
-    <ol>
-      {lst}
-    </ol>
-  </nav>
-}
-
-function Article(props) {
-  return <article>
-    <h2>{props.title}</h2>
-    {props.body}
-  </article>
-}
-function App() {
-  const topics = [
-    {id: 1, title:'html', body:"html is ..."},
-    {id: 2, title:'css', body:"css is ..."},
-    {id: 3, title:'javascript', body:"javascript is ..."}
-  ]
-  return (
-    <div className="App">
-      <Header title="REACT" onChangeMode={()=> {
-        alert('Header')
-      }}></Header>
-      <Nav topics={topics} onChangMode={(id) => {
-        alert(id);
-      }}></Nav>
-      <Article title="Welcome" body="Hello, WEB"></Article>
->>>>>>> Stashed changes
     </div>
   );
 }
