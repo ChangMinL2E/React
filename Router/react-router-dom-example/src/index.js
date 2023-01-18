@@ -2,13 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
-import {
-  BrowserRouter,
-  Route,
-  Routes,
-  Link,
-  useParams,
-} from "react-router-dom";
+import { BrowserRouter, Route, Routes, Link, useParams, useLocation } from "react-router-dom";
 
 function Home() {
   return (
@@ -63,6 +57,18 @@ function Profile() {
   );
 }
 
+function About() {
+  const location = useLocation();
+
+  return (
+    <div>
+      <h1>소개</h1>
+      <p>About Component</p>
+      <p>쿼리스트링: {location.search}</p>
+    </div>
+  );
+}
+
 function App() {
   return (
     <div>
@@ -77,13 +83,23 @@ function App() {
         <li>
           <Link to="/contact">Contact</Link>
         </li>
+        <li>
+          <Link to="/about">about</Link>
+        </li>
       </ul>
       <Routes>
         <Route exact path="/" element={<Home></Home>}></Route>
         <Route path="/topics" element={<Topics></Topics>}></Route>
         <Route path="/contact" element={<Contact></Contact>}></Route>
+        <Route path="/about" element={<About></About>}></Route>
         <Route path="profiles/:username" element={<Profile></Profile>}></Route>
       </Routes>
+      <p>
+        <Link to="/profiles/cml">이창민 프로필</Link>
+      </p>
+      <p>
+        <Link to="/profiles/ccc">없는 프로필</Link>
+      </p>
     </div>
   );
 }
@@ -93,12 +109,6 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <App />
-      <p>
-        <Link to="/profiles/cml">이창민 프로필</Link>
-      </p>
-      <p>
-        <Link to="/profiles/ccc">ccc</Link>
-      </p>
     </BrowserRouter>
   </React.StrictMode>
 );
