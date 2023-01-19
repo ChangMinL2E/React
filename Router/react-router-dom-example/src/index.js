@@ -10,6 +10,7 @@ import {
   useParams,
   useLocation,
   Outlet,
+  useNavigate,
 } from "react-router-dom";
 
 function Home() {
@@ -105,9 +106,22 @@ function Article() {
   );
 }
 function Layout() {
+  const navigate = useNavigate();
+
+  const goBack = () => {
+    navigate(-1);
+  };
+
+  const goArticles = () => {
+    navigate("/articles", { replace: true });
+  };
+
   return (
     <div>
-      <header style={{ background: "lightgray", padding: 16, fontSize: 24 }}>Header</header>
+      <header style={{ background: "lightgray", padding: 16, fontSize: 24 }}>
+        <button onClick={goBack}>뒤로가기</button>
+        <button onClick={goArticles}>게시글 목록</button>
+      </header>
       <main>
         <Outlet></Outlet>
       </main>
@@ -125,9 +139,9 @@ function App() {
           <Route path="/contact" element={<Contact></Contact>}></Route>
           <Route path="/about" element={<About></About>}></Route>
           <Route path="profiles/:username" element={<Profile></Profile>}></Route>
-        </Route>
-        <Route path="/articles" element={<Articles></Articles>}>
-          <Route path=":id" element={<Article></Article>}></Route>
+          <Route path="/articles" element={<Articles></Articles>}>
+            <Route path=":id" element={<Article></Article>}></Route>
+          </Route>
         </Route>
       </Routes>
       <h1>React Router Dom example</h1>
@@ -171,4 +185,5 @@ root.render(
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+// 수정입니다.
 reportWebVitals();
