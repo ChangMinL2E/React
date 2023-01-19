@@ -2,7 +2,15 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter, Route, Routes, Link, useParams, useLocation } from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  Routes,
+  Link,
+  useParams,
+  useLocation,
+  Outlet,
+} from "react-router-dom";
 
 function Home() {
   return (
@@ -69,9 +77,59 @@ function About() {
   );
 }
 
+function Articles() {
+  return (
+    <div>
+      <Outlet></Outlet>
+      <ul>
+        <li>
+          <Link to="/articles/1">게시글 1</Link>
+        </li>
+        <li>
+          <Link to="/articles/2">게시글 2</Link>
+        </li>
+        <li>
+          <Link to="/articles/3">게시글 3</Link>
+        </li>
+      </ul>
+    </div>
+  );
+}
+
+function Article() {
+  const { id } = useParams();
+  return (
+    <div>
+      <h2>게시글 {id}</h2>
+    </div>
+  );
+}
+function Layout() {
+  return (
+    <div>
+      <header style={{ background: "lightgray", padding: 16, fontSize: 24 }}>Header</header>
+      <main>
+        <Outlet></Outlet>
+      </main>
+    </div>
+  );
+}
+
 function App() {
   return (
     <div>
+      <Routes>
+        <Route element={<Layout></Layout>}>
+          <Route path="/" element={<Home></Home>}></Route>
+          <Route path="/topics" element={<Topics></Topics>}></Route>
+          <Route path="/contact" element={<Contact></Contact>}></Route>
+          <Route path="/about" element={<About></About>}></Route>
+          <Route path="profiles/:username" element={<Profile></Profile>}></Route>
+        </Route>
+        <Route path="/articles" element={<Articles></Articles>}>
+          <Route path=":id" element={<Article></Article>}></Route>
+        </Route>
+      </Routes>
       <h1>React Router Dom example</h1>
       <ul>
         <li>
@@ -87,19 +145,16 @@ function App() {
           <Link to="/about">about</Link>
         </li>
       </ul>
-      <Routes>
-        <Route exact path="/" element={<Home></Home>}></Route>
-        <Route path="/topics" element={<Topics></Topics>}></Route>
-        <Route path="/contact" element={<Contact></Contact>}></Route>
-        <Route path="/about" element={<About></About>}></Route>
-        <Route path="profiles/:username" element={<Profile></Profile>}></Route>
-      </Routes>
+
       <p>
         <Link to="/profiles/cml">이창민 프로필</Link>
       </p>
       <p>
         <Link to="/profiles/ccc">없는 프로필</Link>
       </p>
+      <li>
+        <Link to="/articles">게시글 목록</Link>
+      </li>
     </div>
   );
 }
