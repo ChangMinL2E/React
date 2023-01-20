@@ -11,6 +11,7 @@ import {
   useLocation,
   Outlet,
   useNavigate,
+  NavLink,
 } from "react-router-dom";
 
 function Home() {
@@ -79,18 +80,29 @@ function About() {
 }
 
 function Articles() {
+  const activeStyle = {
+    color: "red",
+    fontSize: 21,
+  };
+
   return (
     <div>
       <Outlet></Outlet>
       <ul>
         <li>
-          <Link to="/articles/1">게시글 1</Link>
+          <NavLink to="/articles/1" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
+            게시글 1
+          </NavLink>
         </li>
         <li>
-          <Link to="/articles/2">게시글 2</Link>
+          <NavLink to="/articles/2" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
+            게시글 2
+          </NavLink>
         </li>
         <li>
-          <Link to="/articles/3">게시글 3</Link>
+          <NavLink to="/articles/3" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
+            게시글 3
+          </NavLink>
         </li>
       </ul>
     </div>
@@ -99,6 +111,7 @@ function Articles() {
 
 function Article() {
   const { id } = useParams();
+
   return (
     <div>
       <h2>게시글 {id}</h2>
