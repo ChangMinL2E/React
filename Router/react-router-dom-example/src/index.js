@@ -12,7 +12,10 @@ import {
   Outlet,
   useNavigate,
   NavLink,
+  Navigate,
 } from "react-router-dom";
+import NotFound from "./pages/NotFound";
+import Login from "./pages/Login";
 
 function Home() {
   return (
@@ -80,32 +83,32 @@ function About() {
 }
 
 function Articles() {
+  return (
+    <div>
+      <Outlet></Outlet>
+      <ul>
+        <ArticleItem id={1}></ArticleItem>
+        <ArticleItem id={2}></ArticleItem>
+        <ArticleItem id={3}></ArticleItem>
+      </ul>
+    </div>
+  );
+}
+function ArticleItem({ id }) {
   const activeStyle = {
     color: "red",
     fontSize: 21,
   };
 
   return (
-    <div>
-      <Outlet></Outlet>
-      <ul>
-        <li>
-          <NavLink to="/articles/1" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
-            게시글 1
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/articles/2" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
-            게시글 2
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/articles/3" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
-            게시글 3
-          </NavLink>
-        </li>
-      </ul>
-    </div>
+    <li>
+      <NavLink
+        to={`/articles/${id}`}
+        style={({ isActive }) => (isActive ? activeStyle : undefined)}
+      >
+        게시글 {id}
+      </NavLink>
+    </li>
   );
 }
 
@@ -142,6 +145,16 @@ function Layout() {
   );
 }
 
+const MyPage = () => {
+  const isLoggedIn = false;
+
+  if (!isLoggedIn) {
+    return <Navigate to="/login" replace={true}></Navigate>;
+  }
+
+  return <div>마이 페이지</div>;
+};
+
 function App() {
   return (
     <div>
@@ -151,11 +164,17 @@ function App() {
           <Route path="/topics" element={<Topics></Topics>}></Route>
           <Route path="/contact" element={<Contact></Contact>}></Route>
           <Route path="/about" element={<About></About>}></Route>
-          <Route path="profiles/:username" element={<Profile></Profile>}></Route>
+          <Route
+            path="profiles/:username"
+            element={<Profile></Profile>}
+          ></Route>
           <Route path="/articles" element={<Articles></Articles>}>
             <Route path=":id" element={<Article></Article>}></Route>
           </Route>
         </Route>
+        <Route path="/login" element={<Login></Login>}></Route>
+        <Route path="mypage" element={<MyPage></MyPage>}></Route>
+        <Route path="*" element={<NotFound></NotFound>}></Route>
       </Routes>
       <h1>React Router Dom example</h1>
       <ul>
